@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   PieChart,
   Pie,
@@ -10,6 +11,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { fetchData } from "../data/fetchData";
 
 type EmailData = {
   name: string;
@@ -18,16 +20,35 @@ type EmailData = {
 };
 
 type SalesData = {
-  date: string;
-  sales: number;
-  revenue: number;
+  name: string;
+  minprice: number;
+  maxprice: number;
 };
 
+function getRandomColor() {
+  let n = (Math.random() * 0xfffff * 1000000).toString(16);
+  return "#" + n.slice(0, 6);
+}
+
 const EmailAnalytics: React.FC = () => {
-  const emailData: EmailData[] = [
-    { name: "Sent", value: 30, color: "#fff200bb" },
-    { name: "Receive", value: 19.5, color: "#ff000bbb" },
-  ];
+  const [data, setData] = useState<EmailData[]>([]);
+
+  function formatData(data: EmailData[]) {
+    const formattedData = data.map((item) => ({
+      name: item.name
+        .toLowerCase()
+        .replace(/\b\w/g, (char) => char.toUpperCase()),
+      value: Number(item.value),
+      color: getRandomColor(),
+    }));
+    setData(formattedData);
+  }
+
+  useEffect(() => {
+    fetchData("http://localhost:3001/api/analytics/cards").then((data) => {
+      formatData(data as EmailData[]);
+    });
+  }, []);
 
   return (
     <div className="border-2 border-gray-300 p-6 rounded-lg shadow-sm">
@@ -42,14 +63,14 @@ const EmailAnalytics: React.FC = () => {
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={emailData}
+              data={data}
               cx="50%"
               cy="50%"
               innerRadius={60}
               outerRadius={80}
               dataKey="value"
             >
-              {emailData.map((entry, index) => (
+              {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
@@ -77,14 +98,26 @@ const EmailAnalytics: React.FC = () => {
 };
 
 const SalesAnalytics: React.FC = () => {
-  const salesData: SalesData[] = [
-    { date: "01 Jan", sales: 42, revenue: 12 },
-    { date: "02 Jan", sales: 52, revenue: 23 },
-    { date: "03 Jan", sales: 40, revenue: 19 },
-    { date: "04 Jan", sales: 65, revenue: 70 },
-    { date: "05 Jan", sales: 22, revenue: 12 },
-    { date: "06 Jan", sales: 42, revenue: 25 },
-  ];
+  const [data, setData] = useState<SalesData[]>([]);
+
+  function formatData(data: SalesData[]) {
+    const formattedData = data.map((item) => ({
+      name: item.name
+        .toLowerCase()
+        .replace(/\b\w/g, (char) => char.toUpperCase()),
+      minprice: item.minprice,
+      maxprice: item.maxprice,
+    }));
+    setData(formattedData);
+  }
+
+  useEffect(() => {
+    fetchData("http://localhost:3001/api/analytics/cards/prices").then(
+      (data) => {
+        formatData(data as SalesData[]);
+      }
+    );
+  }, []);
 
   return (
     <div className="border-2 border-gray-300 p-6 rounded-lg shadow-sm">
@@ -95,13 +128,13 @@ const SalesAnalytics: React.FC = () => {
 
       <div className="relative h-64">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={salesData}>
-            <XAxis dataKey="date" />
+          <BarChart data={data}>
+            <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="sales" name="Sales" fill="#fff200bb" />
-            <Bar dataKey="revenue" name="Revenue" fill="#ff000bbb" />
+            <Bar dataKey="minprice" name="Min" fill="#fff200bb" />
+            <Bar dataKey="maxprice" name="Max" fill="#ff000bbb" />
           </BarChart>
         </ResponsiveContainer>
       </div>
