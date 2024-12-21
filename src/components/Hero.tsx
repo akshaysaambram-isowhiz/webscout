@@ -1,5 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
   useGSAP(() => {
@@ -51,22 +52,24 @@ export default function Hero() {
         <h1 className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
           Bid on your favorite trading cards.
         </h1>
-        <p className="mt-8 text-pretty text-sm sm:text-base md:text-lg font-medium text-gray-500
-        ">
+        <p
+          className="mt-8 text-pretty text-sm sm:text-base md:text-lg font-medium text-gray-500
+        "
+        >
           Our auction house is dedicated to providing a fun and safe environment
           to buy and sell trading cards. We offer a wide variety of trading
           cards from popular brands like Panini, Topps, and more.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6 cta">
-          <a
-            href="/dashboard"
+          <Link
+            to="/dashboard"
             className="rounded-lg bg-yellow-500 px-4 py-2.5 text-sm md:text-base font-semibold text-white shadow-lg 
                 hover:bg-yellow-600 hover:shadow-xl focus-visible:outline focus-visible:outline-2 
                 focus-visible:outline-offset-2 focus-visible:outline-yellow-500 transform hover:-translate-y-0.5 
                 active:translate-y-0 transition-all duration-200"
           >
             Get started
-          </a>
+          </Link>
         </div>
       </div>
 

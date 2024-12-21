@@ -2,6 +2,7 @@ import { ChevronDown, Menu, Search, X } from "lucide-react";
 
 import { useState } from "react";
 import logo from "../assets/logo.svg";
+import { Link, NavLink } from "react-router-dom";
 
 const pages = [
   { name: "Home", href: "/" },
@@ -45,10 +46,10 @@ export default function Navbar({
       <div id="desktop-menu" className="px-2 sm:px-4 md:px-8">
         <div className="h-16 flex items-center justify-between lg:justify-start">
           <div className="flex-shrink-0">
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <span className="sr-only">Webscout</span>
               <img className="h-8 w-auto" src={logo} alt="Webscout logo" />
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -67,24 +68,34 @@ export default function Navbar({
                     <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                       <div className="py-1">
                         {page.dropdown.map((item) => (
-                          <a
+                          <NavLink
                             key={item.name}
-                            href={item.href}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 hover:text-black transition-colors duration-300"
+                            to={item.href}
+                            className={({ isActive }) =>
+                              `block px-4 py-2 text-sm text-gray-700 ${
+                                isActive
+                                  ? "bg-yellow-200 text-black font-bold"
+                                  : "hover:bg-yellow-100"
+                              }`
+                            }
                           >
                             {item.name}
-                          </a>
+                          </NavLink>
                         ))}
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <a
-                    href={page.href}
-                    className="text-black font-bold transition-colors duration-300 tracking-wide text-base relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-yellow-400 hover:after:w-full after:transition-all after:duration-300 after:delay-150"
+                  <NavLink
+                    to={page.href}
+                    className={({ isActive }) =>
+                      `text-black font-bold transition-colors duration-300 tracking-wide text-base relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-yellow-400 ${
+                        isActive ? "after:w-full" : "hover:after:w-full"
+                      } after:transition-all after:duration-300 after:delay-150`
+                    }
                   >
                     {page.name}
-                  </a>
+                  </NavLink>
                 )}
               </div>
             ))}

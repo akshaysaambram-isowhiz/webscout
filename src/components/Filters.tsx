@@ -1,17 +1,25 @@
-import { useState } from "react";
 import { formatPrice } from "../utils/formatters";
+import { useSearchParams } from "react-router-dom";
 
 type FilterProps = {
   onFilterChange: (filter: any) => void;
 };
 
 export function Filters({ onFilterChange }: FilterProps) {
-  const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [sortBy, setSortBy] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const priceRange = searchParams.get("priceRange")?.split(",").map(Number) || [
+    0, 1000,
+  ];
+  const sortBy = searchParams.get("sortBy") || "";
 
   const handlePriceChange = (values: number[]) => {
-    setPriceRange(values);
+    setSearchParams({ priceRange: values.join(","), sortBy });
     onFilterChange({ type: "price", values });
+  };
+
+  const handleSortByChange = (value: string) => {
+    setSearchParams({ priceRange: priceRange.join(","), sortBy: value });
+    onFilterChange({ type: "sort", value });
   };
 
   return (
@@ -46,10 +54,7 @@ export function Filters({ onFilterChange }: FilterProps) {
           </label>
           <select
             value={sortBy}
-            onChange={(e) => {
-              setSortBy(e.target.value);
-              onFilterChange({ type: "sort", value: e.target.value });
-            }}
+            onChange={(e) => handleSortByChange(e.target.value)}
             className="w-full p-2 text-sm rounded-md border-2 border-yellow-400 focus:outline-none cursor-pointer"
           >
             <option value="price-asc">Price: Low to High</option>
@@ -61,8 +66,7 @@ export function Filters({ onFilterChange }: FilterProps) {
 
         <button
           onClick={() => {
-            setPriceRange([0, 1000]);
-            setSortBy("");
+            setSearchParams({});
             onFilterChange({ type: "clear" });
           }}
           className="mt-6 w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-md 

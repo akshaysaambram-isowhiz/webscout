@@ -14,7 +14,7 @@ export default function TradingCards() {
 
   return (
     <div className="relative">
-      <Navbar fixed={false} search={true} onSearch={console.log} />
+      <Navbar fixed={false} onSearch={console.log} />
       <Collection {...selectedSport} />
     </div>
   );
