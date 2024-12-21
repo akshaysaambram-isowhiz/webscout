@@ -1,19 +1,32 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CollectionCard, { CollectionCardProps } from "./CollectionCard";
 import { Filters } from "./Filters";
+import { fetchData } from "../data/fetchData";
+import { tradingCards } from "../data/tradingCards";
 
-type CollectionProps = {
-  title?: string;
-  image?: string;
-  data?: CollectionCardProps[];
-};
-
-export default function Collection({ title, image, data }: CollectionProps) {
+export default function Collection() {
   const { sport } = useParams();
-  const [filteredData, setFilteredData] = useState(data);
+  const [data, setData] = useState<CollectionCardProps[]>([]);
+  const [filteredData, setFilteredData] = useState<CollectionCardProps[]>([]);
+
+  const selectedSport = tradingCards.find(
+    (card) => card.title.toLowerCase() === sport
+  );
+
+  const image = selectedSport ? selectedSport.image : "";
+  const title = selectedSport ? selectedSport.title : "";
+
+  useEffect(() => {
+    fetchData(`http://localhost:3001/api/cards?category=${sport}`).then(
+      (data) => {
+        setData(data as CollectionCardProps[]);
+        setFilteredData(data as CollectionCardProps[]);
+      }
+    );
+  }, [sport]);
 
   useGSAP(() => {
     const tl = gsap.timeline({
@@ -42,39 +55,32 @@ export default function Collection({ title, image, data }: CollectionProps) {
   }: {
     type: string;
     value?: string;
-    values: number[];
+    values?: number[];
   }) => {
-    if (!data || data.length === 0) return;
-
     let newData = [...data];
 
     switch (type) {
       case "price":
-        newData = newData.filter(
-          (item) => item.price >= values[0] && item.price <= values[1]
-        );
+        if (values) {
+          newData = data.filter(
+            (item) =>
+              Number(item.price) >= values[0] && Number(item.price) <= values[1]
+          );
+        }
         break;
       case "sort":
-        newData = newData.sort((a, b) => {
-          switch (value) {
-            case "price-asc":
-              return a.price - b.price;
-            case "price-desc":
-              return b.price - a.price;
-            case "date-asc":
-              return (
-                new Date(a.releaseDate).getTime() -
-                new Date(b.releaseDate).getTime()
-              );
-            case "date-desc":
-              return (
-                new Date(b.releaseDate).getTime() -
-                new Date(a.releaseDate).getTime()
-              );
-            default:
-              return 0;
-          }
-        });
+        if (value) {
+          newData.sort((a, b) => {
+            switch (value) {
+              case "price-asc":
+                return Number(a.price) - Number(b.price);
+              case "price-desc":
+                return Number(b.price) - Number(a.price);
+              default:
+                return 0;
+            }
+          });
+        }
         break;
       case "clear":
         newData = data;
@@ -84,7 +90,7 @@ export default function Collection({ title, image, data }: CollectionProps) {
     setFilteredData(newData);
   };
 
-  if (!data || data.length === 0)
+  if (!filteredData || filteredData.length === 0)
     return (
       <div className="flex flex-col items-center justify-center h-[calc(100vh-8rem)] text-center lg:h-[calc(100vh-4rem)] px-4 md:px-0 space-y-4">
         <h4 className="text-xl sm:text-2xl md:text-4xl font-extrabold">
@@ -100,7 +106,7 @@ export default function Collection({ title, image, data }: CollectionProps) {
     );
 
   return (
-    <div className="mx-auto px-4 md:px-8 py-8">
+    <div id="collection" className="mx-auto px-4 md:px-8 py-8">
       <div
         className="w-full h-48 sm:h-64 md:h-96 px-8 sm:px-16 md:px-32 text-center flex flex-col items-center justify-center bg-cover bg-center rounded-xl bg-black/55 bg-blend-overlay mb-8"
         style={{ backgroundImage: `url(${image})` }}

@@ -2,7 +2,11 @@ import { formatPrice } from "../utils/formatters";
 import { useSearchParams } from "react-router-dom";
 
 type FilterProps = {
-  onFilterChange: (filter: any) => void;
+  onFilterChange: (filter: {
+    type: string;
+    values?: number[];
+    value?: string;
+  }) => void;
 };
 
 export function Filters({ onFilterChange }: FilterProps) {
@@ -59,8 +63,6 @@ export function Filters({ onFilterChange }: FilterProps) {
           >
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
-            <option value="date-asc">Release Date: Earliest</option>
-            <option value="date-desc">Release Date: Latest</option>
           </select>
         </div>
 
