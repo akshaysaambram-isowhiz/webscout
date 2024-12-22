@@ -9,6 +9,8 @@ import {
   Tooltip,
 } from "recharts";
 import { toTitleCase } from "../utils/formatters";
+import { Download } from "lucide-react";
+import { downloadChart } from "../utils/downloadChart";
 
 type CardScolledData = {
   name: string;
@@ -53,12 +55,28 @@ export default function CardScrolledChart() {
 
   return (
     <div
-      className="border-2 border-gray-300 p-6 rounded-lg shadow-sm"
-      style={{ flex: 1 }}
+      id="card-scrolled-chart"
+      className="bg-white border-2 border-gray-300 p-6 rounded-lg shadow-sm flex-1"
     >
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Cards Scrolled</h2>
-        <p className="text-sm text-gray-500">Most scrolled cards by sport.</p>
+      <div className="mb-4 flex justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800">
+            Cards Scrolled
+          </h2>
+          <p className="text-sm text-gray-500">Most scrolled cards by sport.</p>
+        </div>
+        <button
+          id="card-scrolled-chart-download-button"
+          onClick={() =>
+            downloadChart({
+              chartId: "card-scrolled-chart",
+              downloadId: "card-scrolled-chart-download-button",
+              fileName: "card-scrolled-chart.png",
+            })
+          }
+        >
+          <Download className="size-6 text-gray-400" />
+        </button>
       </div>
 
       <div className="relative h-64">

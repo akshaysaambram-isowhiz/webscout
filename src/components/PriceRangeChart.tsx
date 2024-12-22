@@ -10,6 +10,8 @@ import {
   YAxis,
 } from "recharts";
 import { toTitleCase } from "../utils/formatters";
+import { Download } from "lucide-react";
+import { downloadChart } from "../utils/downloadChart";
 
 type PriceRangeChartData = {
   name: string;
@@ -39,16 +41,31 @@ export default function PriceRangeChart() {
 
   return (
     <div
-      className="border-2 border-gray-300 p-6 rounded-lg shadow-sm"
+      id="price-range-chart"
+      className="bg-white border-2 border-gray-300 p-6 rounded-lg shadow-sm"
       style={{ flex: 2 }}
     >
-      <div className="mb-4 space-y-2">
-        <h2 className="text-xl font-semibold text-gray-800">
-          Price Range Distribution
-        </h2>
-        <p className="text-sm text-gray-500">
-          Price range distribution for each sport.
-        </p>
+      <div className="mb-4 flex justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800">
+            Price Range Distribution
+          </h2>
+          <p className="text-sm text-gray-500">
+            Price range distribution for each sport.
+          </p>
+        </div>
+        <button
+          id="price-range-chart-download-button"
+          onClick={() =>
+            downloadChart({
+              chartId: "price-range-chart",
+              downloadId: "price-range-chart-download-button",
+              fileName: "price-range-chart.png",
+            })
+          }
+        >
+          <Download className="size-6 text-gray-400" />
+        </button>
       </div>
 
       <div className="relative h-64">
