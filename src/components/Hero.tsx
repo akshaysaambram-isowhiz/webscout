@@ -2,6 +2,12 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Link } from "react-router-dom";
 
+import soccer from "../assets/soccer.jpg";
+import basketball from "../assets/basketball.jpg";
+import baseball from "../assets/baseball.jpg";
+import football from "../assets/football.jpg";
+import hockey from "../assets/hockey.jpg";
+
 export default function Hero() {
   useGSAP(() => {
     const tl = gsap.timeline({
@@ -52,10 +58,7 @@ export default function Hero() {
         <h1 className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
           Bid on your favorite trading cards.
         </h1>
-        <p
-          className="mt-8 text-pretty text-sm sm:text-base md:text-lg font-medium text-gray-500
-        "
-        >
+        <p className="mt-8 text-pretty text-sm sm:text-base md:text-lg font-medium text-black">
           Our auction house is dedicated to providing a fun and safe environment
           to buy and sell trading cards. We offer a wide variety of trading
           cards from popular brands like Panini, Topps, and more.
@@ -75,32 +78,115 @@ export default function Hero() {
 
       <div className="absolute -z-10 w-full flex gap-x-12 blur-sm overflow-hidden">
         <div className="flex items-center gap-x-12 cards">
-          <div className="bg-yellow-200 size-96 rounded-full"></div>
-          <div className="bg-teal-200 size-48 rounded-lg"></div>
-          <div className="bg-orange-200 size-60 rounded-3xl"></div>
-          <div className="bg-lime-200 size-72 rounded-sm"></div>
-          <div className="bg-red-200 size-52 rounded-xl"></div>
+          <div className="size-96 rounded-full overflow-hidden">
+            <img
+              src={soccer}
+              alt="Soccer ball"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-48 rounded-lg overflow-hidden">
+            <img
+              src={basketball}
+              alt="Basketball"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-60 rounded-3xl overflow-hidden">
+            <img
+              src={football}
+              alt="Football"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-72 rounded-sm overflow-hidden">
+            <img
+              src={baseball}
+              alt="Baseball"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-52 rounded-xl overflow-hidden">
+            <img
+              src={hockey}
+              alt="hockey"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
         <div className="flex items-center gap-x-12 cards">
-          <div className="bg-yellow-200 size-96 rounded-full"></div>
-          <div className="bg-teal-200 size-48 rounded-lg"></div>
-          <div className="bg-orange-200 size-60 rounded-3xl"></div>
-          <div className="bg-lime-200 size-72 rounded-sm"></div>
-          <div className="bg-red-200 size-52 rounded-xl"></div>
+          <div className="size-96 rounded-full overflow-hidden">
+            <img
+              src={soccer}
+              alt="Soccer ball"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-48 rounded-lg overflow-hidden">
+            <img
+              src={basketball}
+              alt="Basketball"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-60 rounded-3xl overflow-hidden">
+            <img
+              src={football}
+              alt="Football"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-72 rounded-sm overflow-hidden">
+            <img
+              src={baseball}
+              alt="Baseball"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-52 rounded-xl overflow-hidden">
+            <img
+              src={hockey}
+              alt="hockey"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
         <div className="flex items-center gap-x-12 cards">
-          <div className="bg-yellow-200 size-96 rounded-full"></div>
-          <div className="bg-teal-200 size-48 rounded-lg"></div>
-          <div className="bg-orange-200 size-60 rounded-3xl"></div>
-          <div className="bg-lime-200 size-72 rounded-sm"></div>
-          <div className="bg-red-200 size-52 rounded-xl"></div>
-        </div>
-        <div className="flex items-center gap-x-12 cards">
-          <div className="bg-yellow-200 size-96 rounded-full"></div>
-          <div className="bg-teal-200 size-48 rounded-lg"></div>
-          <div className="bg-orange-200 size-60 rounded-3xl"></div>
-          <div className="bg-lime-200 size-72 rounded-sm"></div>
-          <div className="bg-red-200 size-52 rounded-xl"></div>
+          <div className="size-96 rounded-full overflow-hidden">
+            <img
+              src={soccer}
+              alt="Soccer ball"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-48 rounded-lg overflow-hidden">
+            <img
+              src={basketball}
+              alt="Basketball"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-60 rounded-3xl overflow-hidden">
+            <img
+              src={football}
+              alt="Football"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-72 rounded-sm overflow-hidden">
+            <img
+              src={baseball}
+              alt="Baseball"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="size-52 rounded-xl overflow-hidden">
+            <img
+              src={hockey}
+              alt="hockey"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
       </div>
     </section>

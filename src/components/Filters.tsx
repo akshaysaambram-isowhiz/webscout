@@ -1,29 +1,54 @@
 import { formatPrice } from "../utils/formatters";
 import { useSearchParams } from "react-router-dom";
 
-type FilterProps = {
-  onFilterChange: (filter: {
-    type: string;
-    values?: number[];
-    value?: string;
-  }) => void;
-};
+const DEFAULT_PRICE_RANGE = [0, 1000];
+const DEFAULT_SORT = "";
 
-export function Filters({ onFilterChange }: FilterProps) {
+export function Filters() {
   const [searchParams, setSearchParams] = useSearchParams();
   const priceRange = searchParams.get("priceRange")?.split(",").map(Number) || [
     0, 1000,
   ];
   const sortBy = searchParams.get("sortBy") || "";
 
+  const updateSearchParams = (newParams: {
+    priceRange?: number[];
+    sortBy?: string;
+  }) => {
+    const updatedParams = new URLSearchParams(searchParams);
+
+    if (newParams.priceRange !== undefined) {
+      if (
+        newParams.priceRange[0] === DEFAULT_PRICE_RANGE[0] &&
+        newParams.priceRange[1] === DEFAULT_PRICE_RANGE[1]
+      ) {
+        updatedParams.delete("priceRange");
+      } else {
+        updatedParams.set("priceRange", newParams.priceRange.join(","));
+      }
+    }
+
+    if (newParams.sortBy !== undefined) {
+      if (newParams.sortBy === DEFAULT_SORT) {
+        updatedParams.delete("sortBy");
+      } else {
+        updatedParams.set("sortBy", newParams.sortBy);
+      }
+    }
+
+    if (Array.from(updatedParams.keys()).length > 0) {
+      setSearchParams(updatedParams);
+    } else {
+      setSearchParams({});
+    }
+  };
+
   const handlePriceChange = (values: number[]) => {
-    setSearchParams({ priceRange: values.join(","), sortBy });
-    onFilterChange({ type: "price", values });
+    updateSearchParams({ priceRange: values });
   };
 
   const handleSortByChange = (value: string) => {
-    setSearchParams({ priceRange: priceRange.join(","), sortBy: value });
-    onFilterChange({ type: "sort", value });
+    updateSearchParams({ sortBy: value });
   };
 
   return (
@@ -61,6 +86,7 @@ export function Filters({ onFilterChange }: FilterProps) {
             onChange={(e) => handleSortByChange(e.target.value)}
             className="w-full p-2 text-sm rounded-md border-2 border-yellow-400 focus:outline-none cursor-pointer"
           >
+            <option>Select</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
           </select>
@@ -69,7 +95,6 @@ export function Filters({ onFilterChange }: FilterProps) {
         <button
           onClick={() => {
             setSearchParams({});
-            onFilterChange({ type: "clear" });
           }}
           className="mt-6 w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-md 
                       hover:bg-gray-200 transition-colors duration-200 text-sm font-medium"
