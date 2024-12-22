@@ -1,4 +1,4 @@
-import Analytics from "../components/Charts";
+import Analytics from "../components/Analytics";
 import Navbar from "../components/Navbar";
 
 export default function Dashboard() {

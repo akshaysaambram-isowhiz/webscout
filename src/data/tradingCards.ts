@@ -1,163 +1,59 @@
 import baseball from "../assets/baseball.jpg";
 import basketball from "../assets/basketball.jpg";
 import football from "../assets/football.jpg";
+import formulaOne from "../assets/formula-one.jpg";
 import hockey from "../assets/hockey.jpg";
+import pokemon from "../assets/pokemon.jpg";
 import soccer from "../assets/soccer.jpg";
+import ufcWrestling from "../assets/ufc-wrestling.jpg";
 
 export const tradingCards = [
   {
     id: 1,
     title: "Football",
     image: football,
-    data: [
-      {
-        id: 1,
-        title: "Lionel Messi",
-        player: "Messi",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 100,
-        originalPrice: 400.0,
-        releaseDate: "2022-01-01",
-      },
-      {
-        id: 2,
-        title: "Cristiano Ronaldo",
-        player: "Ronaldo",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 200,
-        originalPrice: 500.0,
-        releaseDate: "2022-01-02",
-      },
-      {
-        id: 3,
-        title: "Neymar Jr",
-        player: "Neymar",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 150,
-        originalPrice: 450.0,
-        releaseDate: "2022-01-03",
-      },
-      {
-        id: 4,
-        title: "Zlatan Ibrahimovic",
-        player: "Ibrahimovic",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 180,
-        originalPrice: 500.0,
-        releaseDate: "2022-01-04",
-      },
-    ],
+    href: "/collections/football",
   },
   {
     id: 2,
     title: "Baseball",
     image: baseball,
-    data: [
-      {
-        id: 1,
-        title: "Bryce Harper",
-        player: "Harper",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 100,
-        originalPrice: 400.0,
-        releaseDate: "2022-01-01",
-      },
-      {
-        id: 2,
-        title: "Mookie Betts",
-        player: "Betts",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 200,
-        originalPrice: 500.0,
-        releaseDate: "2022-01-02",
-      },
-    ],
+    href: "/collections/baseball",
   },
   {
     id: 3,
     title: "Basketball",
     image: basketball,
-    data: [
-      {
-        id: 1,
-        title: "Lebron James",
-        player: "James",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 100,
-        originalPrice: 400.0,
-        releaseDate: "2022-01-01",
-      },
-      {
-        id: 2,
-        title: "Stephen Curry",
-        player: "Curry",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 200,
-        originalPrice: 500.0,
-        releaseDate: "2022-01-02",
-      },
-    ],
+    href: "/collections/basketball",
   },
   {
     id: 4,
     title: "Hockey",
     image: hockey,
-    data: [
-      {
-        id: 1,
-        title: "Sidney Crosby",
-        player: "Crosby",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 100,
-        originalPrice: 400.0,
-        releaseDate: "2022-01-01",
-      },
-      {
-        id: 2,
-        title: "Mikko Rantanen",
-        player: "Rantanen",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 200,
-        originalPrice: 500.0,
-        releaseDate: "2022-01-02",
-      },
-    ],
+    href: "/collections/hockey",
   },
   {
     id: 5,
+    title: "Pokemon",
+    image: pokemon,
+    href: "/collections/pokemon",
+  },
+  {
+    id: 6,
     title: "Soccer",
     image: soccer,
-    data: [
-      {
-        id: 1,
-        title: "Lionel Messi",
-        player: "Messi",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 100,
-        originalPrice: 400.0,
-        releaseDate: "2022-01-01",
-      },
-      {
-        id: 2,
-        title: "Cristiano Ronaldo",
-        player: "Ronaldo",
-        image:
-          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-        price: 200,
-        originalPrice: 500.0,
-        releaseDate: "2022-01-02",
-      },
-    ],
+    href: "/collections/soccer",
+  },
+  {
+    id: 7,
+    title: "UFC-Wrestling",
+    image: ufcWrestling,
+    href: "/collections/ufc-wrestling",
+  },
+  {
+    id: 8,
+    title: "Formula-One",
+    image: formulaOne,
+    href: "/collections/formula-one",
   },
 ];

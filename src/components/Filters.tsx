@@ -1,27 +1,27 @@
 import { formatPrice } from "../utils/formatters";
 import { useSearchParams } from "react-router-dom";
 
-const DEFAULT_PRICE_RANGE = [0, 1000];
-const DEFAULT_SORT = "";
+type FilterProps = {
+  priceRange: [number, number];
+};
 
-export function Filters() {
+export function Filters({ priceRange: [min, max] }: FilterProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const priceRange = searchParams.get("priceRange")?.split(",").map(Number) || [
-    0, 1000,
+    min,
+    max,
   ];
   const sortBy = searchParams.get("sortBy") || "";
 
   const updateSearchParams = (newParams: {
     priceRange?: number[];
+
     sortBy?: string;
   }) => {
     const updatedParams = new URLSearchParams(searchParams);
 
     if (newParams.priceRange !== undefined) {
-      if (
-        newParams.priceRange[0] === DEFAULT_PRICE_RANGE[0] &&
-        newParams.priceRange[1] === DEFAULT_PRICE_RANGE[1]
-      ) {
+      if (newParams.priceRange[0] === min && newParams.priceRange[1] === max) {
         updatedParams.delete("priceRange");
       } else {
         updatedParams.set("priceRange", newParams.priceRange.join(","));
@@ -29,7 +29,7 @@ export function Filters() {
     }
 
     if (newParams.sortBy !== undefined) {
-      if (newParams.sortBy === DEFAULT_SORT) {
+      if (newParams.sortBy === "") {
         updatedParams.delete("sortBy");
       } else {
         updatedParams.set("sortBy", newParams.sortBy);
@@ -62,8 +62,8 @@ export function Filters() {
           </label>
           <input
             type="range"
-            min={0}
-            max={1000}
+            min={min}
+            max={max}
             step={1}
             value={priceRange[0]}
             onChange={(e) =>

@@ -3,18 +3,14 @@ import { ChevronDown, Menu, Search, X } from "lucide-react";
 import { useState } from "react";
 import logo from "../assets/logo.svg";
 import { Link, NavLink } from "react-router-dom";
+import { tradingCards } from "../data/tradingCards";
 
 const pages = [
   { name: "Home", href: "/" },
   {
     name: "Collections",
     href: "/collections",
-    dropdown: [
-      { name: "Baseball", href: "/collections/baseball" },
-      { name: "Basketball", href: "/collections/basketball" },
-      { name: "Football", href: "/collections/football" },
-      { name: "Soccer", href: "/collections/soccer" },
-    ],
+    dropdown: tradingCards,
   },
   { name: "Dashboard", href: "/dashboard" },
 ];
@@ -69,7 +65,7 @@ export default function Navbar({
                       <div className="py-1">
                         {page.dropdown.map((item) => (
                           <NavLink
-                            key={item.name}
+                            key={item.title}
                             to={item.href}
                             className={({ isActive }) =>
                               `block px-4 py-2 text-sm text-gray-700 ${
@@ -79,7 +75,7 @@ export default function Navbar({
                               }`
                             }
                           >
-                            {item.name}
+                            {item.title}
                           </NavLink>
                         ))}
                       </div>
@@ -172,11 +168,11 @@ export default function Navbar({
                     <div className="ml-4 mt-2 space-y-2">
                       {page.dropdown.map((item) => (
                         <a
-                          key={item.name}
+                          key={item.title}
                           href={item.href}
                           className="-mx-3 block rounded-lg px-3 py-2 text-sm font-medium text-gray-300 hover:text-black hover:bg-yellow-100 transition-colors duration-300"
                         >
-                          {item.name}
+                          {item.title}
                         </a>
                       ))}
                     </div>

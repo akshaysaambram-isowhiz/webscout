@@ -113,10 +113,15 @@ export default function Collection() {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4">
-        <Filters />
+        <Filters
+          priceRange={[
+            Math.min(...data.map((c) => Number(c.price))),
+            Math.max(...data.map((c) => Number(c.price))),
+          ]}
+        />
 
         <div
-          className="md:h-[36rem] p-4 md:p-6 overflow-y-scroll scroll-hidden"
+          className="max-h-screen p-4 md:p-6 overflow-y-scroll scroll-hidden"
           style={{ flex: 3 }}
         >
           {filteredData && filteredData.length > 0 ? (
