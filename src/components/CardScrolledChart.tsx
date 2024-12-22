@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { toTitleCase } from "../utils/formatters";
 
 type CardScolledData = {
   name: string;
@@ -36,9 +37,7 @@ export default function CardScrolledChart() {
 
   function formatData(data: CardScolledData[]) {
     const formattedData = data.map((item, index) => ({
-      name: item.name
-        .toLowerCase()
-        .replace(/\b\w/g, (char) => char.toUpperCase()),
+      name: toTitleCase(item.name),
       value: Number(item.value),
       color: getRandomColor(index),
       index: index,

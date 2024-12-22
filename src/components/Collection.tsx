@@ -98,7 +98,7 @@ export default function Collection() {
   }, []);
 
   return (
-    <div id="collection" className="mx-auto px-4 md:px-8 pt-8">
+    <div id="collection" className="mx-auto px-4 md:px-8 pt-32 md:pt-20">
       <div
         className="w-full h-48 sm:h-64 md:h-96 px-8 sm:px-16 md:px-32 text-center flex flex-col items-center justify-center bg-cover bg-center rounded-xl bg-black/55 bg-blend-overlay mb-8"
         style={{ backgroundImage: `url(${image})` }}
@@ -121,7 +121,7 @@ export default function Collection() {
         />
 
         <div
-          className="max-h-screen p-4 md:p-6 overflow-y-scroll scroll-hidden"
+          className="h-[calc(100vh-6rem)] p-4 md:p-6 overflow-y-scroll scroll-hidden"
           style={{ flex: 3 }}
         >
           {filteredData && filteredData.length > 0 ? (

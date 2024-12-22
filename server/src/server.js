@@ -58,6 +58,18 @@ app.get("/api/analytics/cards/prices", async (req, res) => {
   }
 });
 
+app.get("/api/analytics/table", async (req, res) => {
+  try {
+    const result = await client.query(
+      "WITH RankedCards AS ( SELECT image_url AS image, name AS title, price, category AS name, ROW_NUMBER() OVER (PARTITION BY category ORDER BY price) AS row_num FROM cards ) SELECT image, title, price, name AS category FROM RankedCards WHERE row_num BETWEEN 3 AND 5 ORDER BY category, price"
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).send("Database error");
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

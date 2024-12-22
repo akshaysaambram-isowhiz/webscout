@@ -9,6 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { toTitleCase } from "../utils/formatters";
 
 type PriceRangeChartData = {
   name: string;
@@ -21,9 +22,7 @@ export default function PriceRangeChart() {
 
   function formatData(data: PriceRangeChartData[]) {
     const formattedData = data.map((item) => ({
-      name: item.name
-        .toLowerCase()
-        .replace(/\b\w/g, (char) => char.toUpperCase()),
+      name: toTitleCase(item.name),
       minprice: item.minprice,
       maxprice: item.maxprice,
     }));
