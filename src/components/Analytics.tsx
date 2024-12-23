@@ -22,7 +22,10 @@ export default function Analytics() {
   }, []);
 
   return (
-    <div className="pt-32 md:pt-20 pb-10 px-5 md:px-10 space-y-6 md:space-y-12">
+    <div
+      id="analytics"
+      className="pt-32 md:pt-20 pb-10 px-5 md:px-10 space-y-6 md:space-y-12"
+    >
       <div className="space-y-3">
         <h4 className="text-xl md:text-3xl font-bold">Analytics</h4>
         <p className="text-base md:text-lg text-gray-600">
@@ -31,7 +34,7 @@ export default function Analytics() {
         </p>
         <hr className="border-t border-gray-300" />
       </div>
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         <CardScrolledChart />
         <PriceRangeChart />
       </div>

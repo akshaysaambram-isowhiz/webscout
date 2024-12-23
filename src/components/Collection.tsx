@@ -13,6 +13,8 @@ export default function Collection() {
   const [data, setData] = useState<CollectionCardProps[]>([]);
   const [filteredData, setFilteredData] = useState<CollectionCardProps[]>([]);
 
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const searchTerm = searchParams.get("search") || "";
   const selectedSport = tradingCards.find(
     (card) => card.title.toLowerCase() === sport
   );
@@ -28,19 +30,19 @@ export default function Collection() {
   };
 
   useEffect(() => {
-    fetchData(`http://localhost:3001/api/cards?category=${sport}`).then(
-      (data) => {
-        setData(data as CollectionCardProps[]);
+    fetchData(
+      `http://localhost:3001/api/cards?category=${sport}&page=${currentPage}&search=${searchTerm}`
+    ).then((data: any) => {
+      setData(data.data as CollectionCardProps[]);
 
-        const currentFilters = getCurrentFilters();
-        const filteredResults = applyFilters(
-          data as CollectionCardProps[],
-          currentFilters
-        );
-        setFilteredData(filteredResults);
-      }
-    );
-  }, [sport]);
+      const currentFilters = getCurrentFilters();
+      const filteredResults = applyFilters(
+        data.data as CollectionCardProps[],
+        currentFilters
+      );
+      setFilteredData(filteredResults);
+    });
+  }, [sport, currentPage, searchTerm]);
 
   useEffect(() => {
     const currentFilters = getCurrentFilters();
@@ -98,7 +100,7 @@ export default function Collection() {
   }, []);
 
   return (
-    <div id="collection" className="mx-auto px-4 md:px-8 pt-32 md:pt-20">
+    <div id="collection" className="mx-auto px-4 md:px-8 pt-32 lg:pt-24">
       <div
         className="w-full h-48 sm:h-64 md:h-96 px-8 sm:px-16 md:px-32 text-center flex flex-col items-center justify-center bg-cover bg-center rounded-xl bg-black/55 bg-blend-overlay mb-8"
         style={{ backgroundImage: `url(${image})` }}
@@ -124,21 +126,11 @@ export default function Collection() {
           className="h-[calc(100vh-6rem)] p-4 md:p-6 overflow-y-scroll scroll-hidden"
           style={{ flex: 3 }}
         >
-          {filteredData && filteredData.length > 0 ? (
+          {filteredData && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredData.map((card) => (
                 <CollectionCard key={card.title} {...card} />
               ))}
-            </div>
-          ) : (
-            <div className="flex flex-col h-full items-center justify-center py-8 space-y-4">
-              <p className="text-lg text-gray-600">
-                Sorry, we couldn't find any items that match your filters.
-              </p>
-              <p className="text-base text-gray-400">
-                Please try adjusting your filters or searching for something
-                else.
-              </p>
             </div>
           )}
         </div>

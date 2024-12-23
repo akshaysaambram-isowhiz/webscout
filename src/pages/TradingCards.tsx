@@ -1,11 +1,13 @@
 import Collection from "../components/Collection";
 import Navbar from "../components/Navbar";
+import Pagination from "../components/Pagination";
 
 export default function TradingCards() {
   return (
     <div className="relative">
-      <Navbar onSearch={console.log} />
+      <Navbar />
       <Collection />
+      <Pagination totalPages={3} onPageChange={console.log} />
     </div>
   );
 }

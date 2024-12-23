@@ -1,9 +1,11 @@
-import { ChevronDown, Menu, Search, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 import { useState } from "react";
 import logo from "../assets/logo.svg";
 import { Link, NavLink } from "react-router-dom";
 import { tradingCards } from "../data/tradingCards";
+import { toTitleCase } from "../utils/formatters";
+import SearchInput from "./SearchInput";
 
 const pages = [
   { name: "Home", href: "/" },
@@ -18,14 +20,9 @@ const pages = [
 type NavbarProps = {
   fixed?: boolean;
   search?: boolean;
-  onSearch?: (query: string) => void;
 };
 
-export default function Navbar({
-  fixed = true,
-  search = true,
-  onSearch,
-}: NavbarProps) {
+export default function Navbar({ fixed = true, search = true }: NavbarProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   function toggleMenu() {
@@ -75,7 +72,7 @@ export default function Navbar({
                               }`
                             }
                           >
-                            {item.title}
+                            {toTitleCase(item.title)}
                           </NavLink>
                         ))}
                       </div>
@@ -101,12 +98,7 @@ export default function Navbar({
           {search && (
             <div className="hidden lg:flex flex-1">
               <div className="relative w-full flex justify-end">
-                <input
-                  className="w-2/3 rounded-lg border-2 border-gray-300 py-2 px-3 outline-none hover:ring-2 hover:ring-yellow-400 hover:border-transparent focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-shadow"
-                  placeholder="Search..."
-                  type="text"
-                  onChange={(e) => onSearch?.(e.target.value)}
-                />
+                <SearchInput />
               </div>
             </div>
           )}
@@ -126,13 +118,7 @@ export default function Navbar({
         {search && (
           <div className="lg:hidden">
             <div className="relative">
-              <input
-                className="flex-1 rounded-lg border-2 border-gray-300 p-2 ps-10 outline-none hover:ring-2 hover:ring-yellow-400 hover:border-transparent focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-shadow peer w-full"
-                placeholder="Search..."
-                type="text"
-                onChange={(e) => onSearch?.(e.target.value)}
-              />
-              <Search className="absolute top-[14px] left-3 size-4 text-gray-400 peer-hover:text-yellow-400 peer-focus:text-yellow-400" />
+              <SearchInput className="w-full" />
             </div>
           </div>
         )}

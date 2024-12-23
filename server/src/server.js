@@ -21,13 +21,52 @@ app.use(express.json());
 client.connect();
 
 app.get("/api/cards", async (req, res) => {
-  const { category } = req.query;
+  const { category, search = "", page = 1, limit = 10 } = req.query;
+  const offset = (page - 1) * limit;
+
+  if (!category) {
+    return res.status(400).json({
+      error: "Request param category is missing.",
+      message: "You must specify a category to search for cards.",
+    });
+  }
+
   try {
     const result = await client.query(
-      "SELECT name as title, price, image_url as image FROM cards WHERE category = $1",
-      [category]
+      `
+      SELECT 
+        name AS title, 
+        price, 
+        image_url AS image 
+      FROM cards 
+      WHERE category = $1 AND name IS NOT null AND name ILIKE $2
+      LIMIT $3 OFFSET $4
+      `,
+      [category, `%${search}%`, limit, offset]
     );
-    res.json(result.rows);
+
+    const countResult = await client.query(
+      `
+      SELECT COUNT(*) AS total 
+      FROM cards 
+      WHERE category = $1 AND name IS NOT null AND name ILIKE $2
+      `,
+      [category, `%${search}%`]
+    );
+
+    const total = parseInt(countResult.rows[0].total, 10);
+    const totalPages = Math.ceil(total / limit);
+
+    res.json({
+      search: search,
+      data: result.rows,
+      metadata: {
+        page: parseInt(page, 10),
+        limit: parseInt(limit, 10),
+        totalPages,
+        totalItems: total,
+      },
+    });
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).send("Database error");

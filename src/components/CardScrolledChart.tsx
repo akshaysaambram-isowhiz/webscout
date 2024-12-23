@@ -28,11 +28,6 @@ export default function CardScrolledChart() {
       "#F1C40F",
       "#EC7063",
       "#F2C464",
-      "#F39C12",
-      "#E8B422",
-      "#F8E231",
-      "#D2B438",
-      "#FFC107",
     ];
     return colors[index % colors.length];
   }
@@ -103,11 +98,11 @@ export default function CardScrolledChart() {
               dominantBaseline="middle"
               className="text-gray-700"
             >
-              <tspan x="50%" dy="-2.25em" className="text-lg font-semibold">
+              <tspan x="50%" dy="-1.5em" className="text-lg font-semibold">
                 Total
               </tspan>
               <tspan x="50%" dy="1em" className="text-xl font-bold">
-                49.5%
+                {data.reduce((total, item) => total + item.value, 0)}
               </tspan>
             </text>
           </PieChart>

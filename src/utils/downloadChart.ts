@@ -30,9 +30,7 @@ export const downloadChart = ({
     })
     .catch((err) => {
       console.error("Error exporting chart:", err);
-    })
-    .finally(() => {
-      // Show the button again
-      downloadButton.style.display = "block";
     });
+
+  downloadButton.style.display = "block";
 };
