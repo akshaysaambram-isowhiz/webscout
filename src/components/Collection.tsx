@@ -1,83 +1,21 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import CollectionCard, { CollectionCardProps } from "./CollectionCard";
-import { Filters } from "./Filters";
-import { fetchData } from "../data/fetchData";
 import { tradingCards } from "../data/tradingCards";
+import useCollectionData from "../hooks/useCollectionData";
+import CollectionCard from "./CollectionCard";
+import { Filters } from "./Filters";
 
 export default function Collection() {
-  const { sport } = useParams();
+  const { sport = "all" } = useParams();
   const [searchParams] = useSearchParams();
-  const [data, setData] = useState<CollectionCardProps[]>([]);
-  const [filteredData, setFilteredData] = useState<CollectionCardProps[]>([]);
-
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const searchTerm = searchParams.get("search") || "";
+  const { data, filteredData } = useCollectionData(sport, searchParams);
   const selectedSport = tradingCards.find(
     (card) => card.title.toLowerCase() === sport
   );
 
   const image = selectedSport ? selectedSport.image : "";
   const title = selectedSport ? selectedSport.title : "";
-
-  const getCurrentFilters = () => {
-    const priceRange =
-      searchParams.get("priceRange")?.split(",").map(Number) || null;
-    const sortBy = searchParams.get("sortBy") || null;
-    return { priceRange, sortBy };
-  };
-
-  useEffect(() => {
-    fetchData(
-      `http://localhost:3001/api/cards?category=${sport}&page=${currentPage}&search=${searchTerm}`
-    ).then((data: any) => {
-      setData(data.data as CollectionCardProps[]);
-
-      const currentFilters = getCurrentFilters();
-      const filteredResults = applyFilters(
-        data.data as CollectionCardProps[],
-        currentFilters
-      );
-      setFilteredData(filteredResults);
-    });
-  }, [sport, currentPage, searchTerm]);
-
-  useEffect(() => {
-    const currentFilters = getCurrentFilters();
-    const filteredResults = applyFilters(data, currentFilters);
-    setFilteredData(filteredResults);
-  }, [searchParams, data]);
-
-  const applyFilters = (
-    currentData: CollectionCardProps[],
-    filters: { priceRange: number[] | null; sortBy: string | null }
-  ) => {
-    let result = [...currentData];
-
-    if (filters.priceRange) {
-      const [min, max] = filters.priceRange;
-      result = result.filter(
-        (item) => Number(item.price) >= min && Number(item.price) <= max
-      );
-    }
-
-    if (filters.sortBy) {
-      result.sort((a, b) => {
-        switch (filters.sortBy) {
-          case "price-asc":
-            return Number(a.price) - Number(b.price);
-          case "price-desc":
-            return Number(b.price) - Number(a.price);
-          default:
-            return 0;
-        }
-      });
-    }
-
-    return result;
-  };
 
   useGSAP(() => {
     const tl = gsap.timeline({

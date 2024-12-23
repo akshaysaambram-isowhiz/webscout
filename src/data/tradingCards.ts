@@ -31,8 +31,8 @@ export const tradingCards = [
   },
   {
     id: 7,
-    title: "UFC-Wrestling",
+    title: "UFC",
     image: ufcWrestling,
-    href: "/collections/ufc-wrestling",
+    href: "/collections/ufc",
   },
 ];

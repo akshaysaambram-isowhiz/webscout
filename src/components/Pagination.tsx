@@ -2,13 +2,9 @@ import { useSearchParams } from "react-router-dom";
 
 type PaginationProps = {
   totalPages: number;
-  onPageChange: (page: number) => void;
 };
 
-export default function Pagination({
-  totalPages,
-  onPageChange,
-}: PaginationProps) {
+export default function Pagination({ totalPages }: PaginationProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -17,7 +13,6 @@ export default function Pagination({
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
     setSearchParams({ page: String(page) });
-    onPageChange(page);
   };
   return (
     <div className="flex items-center justify-center space-x-2 my-6">

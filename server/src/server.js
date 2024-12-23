@@ -39,10 +39,10 @@ app.get("/api/cards", async (req, res) => {
         price, 
         image_url AS image 
       FROM cards 
-      WHERE category = $1 AND name IS NOT null AND name ILIKE $2
+      WHERE category ILIKE $1 AND name IS NOT null AND name ILIKE $2
       LIMIT $3 OFFSET $4
       `,
-      [category, `%${search}%`, limit, offset]
+      [`%${category}%`, `%${search}%`, limit, offset]
     );
 
     const countResult = await client.query(

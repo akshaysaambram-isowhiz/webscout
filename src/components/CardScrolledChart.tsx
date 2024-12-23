@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "../data/fetchData";
+
 import {
   Cell,
   Legend,
@@ -22,13 +23,7 @@ export default function CardScrolledChart() {
   const [data, setData] = useState<CardScolledData[]>([]);
 
   function getRandomColor(index: number) {
-    const colors = [
-      "#F7DC6F",
-      "#E74C3C",
-      "#F1C40F",
-      "#EC7063",
-      "#F2C464",
-    ];
+    const colors = ["#F7DC6F", "#E74C3C", "#F1C40F", "#EC7063", "#F2C464"];
     return colors[index % colors.length];
   }
 
@@ -74,7 +69,7 @@ export default function CardScrolledChart() {
         </button>
       </div>
 
-      <div className="relative h-64">
+      <div className="relative h-64 min-h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie

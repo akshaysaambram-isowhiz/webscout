@@ -68,7 +68,7 @@ export default function PriceRangeChart() {
         </button>
       </div>
 
-      <div className="relative h-64">
+      <div className="relative h-64 min-h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
             <XAxis dataKey="name" />

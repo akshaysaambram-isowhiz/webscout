@@ -7,7 +7,7 @@ export default function TradingCards() {
     <div className="relative">
       <Navbar />
       <Collection />
-      <Pagination totalPages={3} onPageChange={console.log} />
+      <Pagination totalPages={3} />
     </div>
   );
 }

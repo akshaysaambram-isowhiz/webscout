@@ -1,55 +1,15 @@
+import useFilterParams from "../hooks/useFilterParams";
 import { formatPrice } from "../utils/formatters";
-import { useSearchParams } from "react-router-dom";
 
 type FilterProps = {
   priceRange: [number, number];
 };
 
 export function Filters({ priceRange: [min, max] }: FilterProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const priceRange = searchParams.get("priceRange")?.split(",").map(Number) || [
+  const { priceRange, sortBy, updateParams, resetFilters } = useFilterParams([
     min,
     max,
-  ];
-  const sortBy = searchParams.get("sortBy") || "";
-
-  const updateSearchParams = (newParams: {
-    priceRange?: number[];
-
-    sortBy?: string;
-  }) => {
-    const updatedParams = new URLSearchParams(searchParams);
-
-    if (newParams.priceRange !== undefined) {
-      if (newParams.priceRange[0] === min && newParams.priceRange[1] === max) {
-        updatedParams.delete("priceRange");
-      } else {
-        updatedParams.set("priceRange", newParams.priceRange.join(","));
-      }
-    }
-
-    if (newParams.sortBy !== undefined) {
-      if (newParams.sortBy === "") {
-        updatedParams.delete("sortBy");
-      } else {
-        updatedParams.set("sortBy", newParams.sortBy);
-      }
-    }
-
-    if (Array.from(updatedParams.keys()).length > 0) {
-      setSearchParams(updatedParams);
-    } else {
-      setSearchParams({});
-    }
-  };
-
-  const handlePriceChange = (values: number[]) => {
-    updateSearchParams({ priceRange: values });
-  };
-
-  const handleSortByChange = (value: string) => {
-    updateSearchParams({ sortBy: value });
-  };
+  ]);
 
   return (
     <div className="flex-1 lg:w-64 space-y-6 p-4">
@@ -67,7 +27,9 @@ export function Filters({ priceRange: [min, max] }: FilterProps) {
             step={1}
             value={priceRange[0]}
             onChange={(e) =>
-              handlePriceChange([Number(e.target.value), priceRange[1]])
+              updateParams({
+                priceRange: [Number(e.target.value), priceRange[1]],
+              })
             }
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-yellow-500"
           />
@@ -83,7 +45,7 @@ export function Filters({ priceRange: [min, max] }: FilterProps) {
           </label>
           <select
             value={sortBy}
-            onChange={(e) => handleSortByChange(e.target.value)}
+            onChange={(e) => updateParams({ sortBy: e.target.value })}
             className="w-full p-2 text-sm rounded-md border-2 border-yellow-400 focus:outline-none cursor-pointer"
           >
             <option>Select</option>
@@ -93,9 +55,7 @@ export function Filters({ priceRange: [min, max] }: FilterProps) {
         </div>
 
         <button
-          onClick={() => {
-            setSearchParams({});
-          }}
+          onClick={resetFilters}
           className="mt-6 w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-md 
                       hover:bg-gray-200 transition-colors duration-200 text-sm font-medium"
         >

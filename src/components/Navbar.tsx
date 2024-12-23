@@ -41,7 +41,12 @@ export default function Navbar({ fixed = true, search = true }: NavbarProps) {
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
               <span className="sr-only">Webscout</span>
-              <img className="h-8 w-auto" src={logo} alt="Webscout logo" />
+              <img
+                className="h-8 w-auto"
+                src={logo}
+                alt="Webscout logo"
+                loading="lazy"
+              />
             </Link>
           </div>
 
@@ -132,7 +137,12 @@ export default function Navbar({ fixed = true, search = true }: NavbarProps) {
         <div className="flex items-center justify-between">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Webscout</span>
-            <img className="h-8 w-auto" src={logo} alt="Webscout Logo" />
+            <img
+              className="h-8 w-auto"
+              src={logo}
+              alt="Webscout Logo"
+              loading="lazy"
+            />
           </a>
           <button className="text-yellow-400" onClick={toggleMenu}>
             <span className="sr-only">Close menu</span>
