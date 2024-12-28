@@ -24,7 +24,7 @@ export default function Analytics() {
   return (
     <div
       id="analytics"
-      className="pt-32 md:pt-20 pb-10 px-5 md:px-10 space-y-6 md:space-y-12"
+      className="pt-32 lg:pt-20 pb-10 px-5 md:px-10 space-y-6 md:space-y-12"
     >
       <div className="space-y-3">
         <h4 className="text-xl md:text-3xl font-bold">Analytics</h4>

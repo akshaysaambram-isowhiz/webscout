@@ -7,6 +7,7 @@ export default function useCollectionData(
   searchParams: URLSearchParams
 ) {
   const [data, setData] = useState<CollectionCardProps[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
   const [filteredData, setFilteredData] = useState<CollectionCardProps[]>([]);
 
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -53,6 +54,7 @@ export default function useCollectionData(
       `http://localhost:3001/api/cards?category=${sport}&page=${currentPage}&search=${searchTerm}`
     ).then((data: any) => {
       setData(data.data as CollectionCardProps[]);
+      setTotalPages(data.metadata?.totalPages || 1);
       const currentFilters = getCurrentFilters();
       setFilteredData(
         applyFilters(data.data as CollectionCardProps[], currentFilters)
@@ -65,5 +67,7 @@ export default function useCollectionData(
     setFilteredData(applyFilters(data, currentFilters));
   }, [searchParams, data]);
 
-  return { data, filteredData };
+  console.log(totalPages);
+
+  return { data, filteredData, totalPages };
 }

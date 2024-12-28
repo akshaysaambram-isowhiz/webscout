@@ -1,18 +1,24 @@
+import { lazy, Suspense } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Loading from "./components/Loading";
+import NotFound from "./components/NotFound";
 
-import Dashboard from "./pages/Dashboard";
-import Home from "./pages/Home";
-import TradingCards from "./pages/TradingCards";
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Home = lazy(() => import("./pages/Home"));
+const TradingCards = lazy(() => import("./pages/TradingCards"));
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/collections/:sport" element={<TradingCards />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </Router>
+    <Suspense fallback={<Loading />}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/collections/:sport" element={<TradingCards />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </Suspense>
   );
 }
 

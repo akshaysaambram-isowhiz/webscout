@@ -1,8 +1,8 @@
 import { ChevronDown, Menu, X } from "lucide-react";
 
 import { useState } from "react";
-import logo from "../assets/logo.svg";
 import { Link, NavLink } from "react-router-dom";
+import logo from "../assets/logo.svg";
 import { tradingCards } from "../data/tradingCards";
 import { toTitleCase } from "../utils/formatters";
 import SearchInput from "./SearchInput";
@@ -22,7 +22,7 @@ type NavbarProps = {
   search?: boolean;
 };
 
-export default function Navbar({ fixed = true, search = true }: NavbarProps) {
+export default function Navbar({ fixed = true, search = false }: NavbarProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   function toggleMenu() {
@@ -135,7 +135,7 @@ export default function Navbar({ fixed = true, search = true }: NavbarProps) {
         className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-black p-6 sm:max-w-sm transform translate-x-full transition-transform duration-700 delay-150 ease-in-out"
       >
         <div className="flex items-center justify-between">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Webscout</span>
             <img
               className="h-8 w-auto"
@@ -143,7 +143,7 @@ export default function Navbar({ fixed = true, search = true }: NavbarProps) {
               alt="Webscout Logo"
               loading="lazy"
             />
-          </a>
+          </Link>
           <button className="text-yellow-400" onClick={toggleMenu}>
             <span className="sr-only">Close menu</span>
             <X className="size-6" />
@@ -154,22 +154,28 @@ export default function Navbar({ fixed = true, search = true }: NavbarProps) {
             <div className="space-y-2 py-6">
               {pages.map((page) => (
                 <div key={page.name}>
-                  <a
-                    href={page.href}
+                  <NavLink
+                    to={page.href}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:text-black hover:bg-yellow-100 transition-colors duration-300"
                   >
                     {page.name}
-                  </a>
+                  </NavLink>
                   {page.dropdown && (
                     <div className="ml-4 mt-2 space-y-2">
                       {page.dropdown.map((item) => (
-                        <a
+                        <NavLink
                           key={item.title}
-                          href={item.href}
-                          className="-mx-3 block rounded-lg px-3 py-2 text-sm font-medium text-gray-300 hover:text-black hover:bg-yellow-100 transition-colors duration-300"
+                          to={item.href}
+                          className={({ isActive }) =>
+                            `-mx-3 block rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-300 ${
+                              isActive
+                                ? "text-black bg-yellow-100"
+                                : "text-gray-300 hover:text-black hover:bg-yellow-100"
+                            }`
+                          }
                         >
                           {item.title}
-                        </a>
+                        </NavLink>
                       ))}
                     </div>
                   )}

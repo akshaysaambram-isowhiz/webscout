@@ -1,15 +1,22 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { tradingCards } from "../data/tradingCards";
 import useCollectionData from "../hooks/useCollectionData";
 import CollectionCard from "./CollectionCard";
 import { Filters } from "./Filters";
+import Pagination from "./Pagination";
 
-export default function Collection() {
-  const { sport = "all" } = useParams();
+type CollectionProps = {
+  sport: string;
+};
+
+export default function Collection({ sport }: CollectionProps) {
   const [searchParams] = useSearchParams();
-  const { data, filteredData } = useCollectionData(sport, searchParams);
+  const { data, filteredData, totalPages } = useCollectionData(
+    sport,
+    searchParams
+  );
   const selectedSport = tradingCards.find(
     (card) => card.title.toLowerCase() === sport
   );
@@ -38,7 +45,7 @@ export default function Collection() {
   }, []);
 
   return (
-    <div id="collection" className="mx-auto px-4 md:px-8 pt-32 lg:pt-24">
+    <div id="collection" className="mx-auto px-4 md:px-8 mt-6">
       <div
         className="w-full h-48 sm:h-64 md:h-96 px-8 sm:px-16 md:px-32 text-center flex flex-col items-center justify-center bg-cover bg-center rounded-xl bg-black/55 bg-blend-overlay mb-8"
         style={{ backgroundImage: `url(${image})` }}
@@ -73,6 +80,8 @@ export default function Collection() {
           )}
         </div>
       </div>
+
+      <Pagination totalPages={totalPages} />
     </div>
   );
 }
