@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchData } from "../data/fetchData";
 import CardScrolledChart from "./CardScrolledChart";
 import DataTable from "./DataTable";
-import PriceRangeChart from "./PriceRangeChart";
+import CardDistributionChart from "./CardDistributionChart";
 
 export type TableData = {
   image: string;
@@ -36,7 +36,7 @@ export default function Analytics() {
       </div>
       <div className="flex flex-col lg:flex-row gap-6">
         <CardScrolledChart />
-        <PriceRangeChart />
+        <CardDistributionChart />
       </div>
       <div className="flex flex-wrap gap-4">
         <div className="border-2 border-gray-200 p-6 flex flex-1 items-center justify-center gap-4 space-y-2 rounded-xl">

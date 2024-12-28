@@ -39,6 +39,7 @@ export default function DataTable({ data }: DataTableProps) {
 
   return (
     <div className="overflow-x-auto">
+      <h4 className="text-xl font-semibold mb-4">Data Table</h4>
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>

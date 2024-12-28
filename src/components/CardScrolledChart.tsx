@@ -53,7 +53,9 @@ export default function CardScrolledChart() {
           <h2 className="text-xl font-semibold text-gray-800">
             Cards Scrolled
           </h2>
-          <p className="text-sm text-gray-500">Most scrolled cards by sport.</p>
+          <p className="text-sm text-gray-500">
+            Most scrolled cards by website.
+          </p>
         </div>
         <button
           id="card-scrolled-chart-download-button"
@@ -93,7 +95,7 @@ export default function CardScrolledChart() {
               dominantBaseline="middle"
               className="text-gray-700"
             >
-              <tspan x="50%" dy="-1.5em" className="text-lg font-semibold">
+              <tspan x="50%" dy="-1em" className="text-lg font-semibold">
                 Total
               </tspan>
               <tspan x="50%" dy="1em" className="text-xl font-bold">

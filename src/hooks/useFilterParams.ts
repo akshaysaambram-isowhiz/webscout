@@ -36,7 +36,9 @@ export default function useFilterParams(defaultPriceRange: [number, number]) {
   };
 
   const resetFilters = () => {
-    setSearchParams({});
+    searchParams.delete("priceRange");
+    searchParams.delete("sortBy");
+    setSearchParams(searchParams);
   };
 
   return { priceRange, sortBy, updateParams, resetFilters };

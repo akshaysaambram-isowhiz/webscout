@@ -12,8 +12,12 @@ export default function Pagination({ totalPages }: PaginationProps) {
 
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
-    setSearchParams({ page: String(page) });
+
+    const updatedSearchParams = new URLSearchParams(searchParams.toString());
+    updatedSearchParams.set("page", page.toString());
+    setSearchParams(updatedSearchParams);
   };
+
   return (
     <div className="flex items-center justify-center space-x-2 my-6">
       <button

@@ -9,58 +9,57 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { toTitleCase } from "../utils/formatters";
 import { Download } from "lucide-react";
 import { downloadChart } from "../utils/downloadChart";
 
-type PriceRangeChartData = {
-  name: string;
-  minprice: number;
-  maxprice: number;
+type CardDistributionChartData = {
+  category: string;
+  BT: number;
+  GSC: number;
 };
 
-export default function PriceRangeChart() {
-  const [data, setData] = useState<PriceRangeChartData[]>([]);
+export default function CardDistributionChart() {
+  const [data, setData] = useState<CardDistributionChartData[]>([]);
 
-  function formatData(data: PriceRangeChartData[]) {
+  function formatData(data: CardDistributionChartData[]) {
     const formattedData = data.map((item) => ({
-      name: toTitleCase(item.name),
-      minprice: item.minprice,
-      maxprice: item.maxprice,
+      category: item.category,
+      BT: item.BT,
+      GSC: item.GSC,
     }));
     setData(formattedData);
   }
 
   useEffect(() => {
-    fetchData("http://localhost:3001/api/analytics/cards/prices").then(
+    fetchData("http://localhost:3001/api/analytics/cards/distributions").then(
       (data) => {
-        formatData(data as PriceRangeChartData[]);
+        formatData(data as CardDistributionChartData[]);
       }
     );
   }, []);
 
   return (
     <div
-      id="price-range-chart"
+      id="card-distribution-chart"
       className="bg-white border-2 border-gray-300 p-6 rounded-lg shadow-sm"
       style={{ flex: 2 }}
     >
       <div className="mb-4 flex justify-between">
         <div>
           <h2 className="text-xl font-semibold text-gray-800">
-            Price Range Distribution
+            Card Distribution
           </h2>
           <p className="text-sm text-gray-500">
-            Price range distribution for each sport.
+            Card distribution for each sport group by website.
           </p>
         </div>
         <button
-          id="price-range-chart-download-button"
+          id="card-distribution-chart-download-button"
           onClick={() =>
             downloadChart({
-              chartId: "price-range-chart",
-              downloadId: "price-range-chart-download-button",
-              fileName: "price-range-chart.png",
+              chartId: "card-distribution-chart",
+              downloadId: "card-distribution-chart-download-button",
+              fileName: "card-distribution-chart.png",
             })
           }
         >
@@ -71,12 +70,12 @@ export default function PriceRangeChart() {
       <div className="relative h-64 min-h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
-            <XAxis dataKey="name" />
+            <XAxis dataKey="category" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="minprice" name="Min" fill="#fff200bb" />
-            <Bar dataKey="maxprice" name="Max" fill="#ff000bbb" />
+            <Bar dataKey="BT" name="BT" fill="#fff200bb" />
+            <Bar dataKey="GSC" name="GSC" fill="#ff000bbb" />
           </BarChart>
         </ResponsiveContainer>
       </div>
