@@ -36,7 +36,7 @@ export default function Navbar({ fixed = true, search = false }: NavbarProps) {
         fixed ? "fixed" : "relative"
       } inset-x-0 top-0 z-50 bg-white`}
     >
-      <div id="desktop-menu" className="px-2 sm:px-4 md:px-8">
+      <div id="desktop-menu" className="px-2 sm:px-4 md:px-8 pb-4 md:pb-0">
         <div className="h-16 flex items-center justify-between lg:justify-start">
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">

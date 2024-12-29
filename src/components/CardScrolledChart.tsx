@@ -95,7 +95,7 @@ export default function CardScrolledChart() {
               dominantBaseline="middle"
               className="text-gray-700"
             >
-              <tspan x="50%" dy="-1em" className="text-lg font-semibold">
+              <tspan x="50%" dy="-1.5em" className="text-lg font-semibold">
                 Total
               </tspan>
               <tspan x="50%" dy="1em" className="text-xl font-bold">

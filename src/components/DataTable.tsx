@@ -3,10 +3,10 @@ import { toTitleCase } from "../utils/formatters";
 import { TableData } from "./Analytics";
 
 const columns = [
-  { header: "Image", accessor: "image" },
   { header: "Name", accessor: "title" },
-  { header: "Price", accessor: "price" },
+  { header: "Website", accessor: "website" },
   { header: "Category", accessor: "category" },
+  { header: "Price", accessor: "price" },
 ];
 
 type DataTableProps = {
@@ -65,19 +65,12 @@ export default function DataTable({ data }: DataTableProps) {
               key={item.title}
               className="odd:bg-gray-100 hover:bg-yellow-200 transition-colors duration-500"
             >
-              <td className="px-6 py-4">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="size-24 object-cover rounded-xl"
-                  loading="lazy"
-                />
-              </td>
               <td className="px-6 py-4 whitespace-nowrap">{item.title}</td>
-              <td className="px-6 py-4 whitespace-nowrap">${item.price}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{item.website}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {toTitleCase(item.category)}
               </td>
+              <td className="px-6 py-4 whitespace-nowrap">${item.price}</td>
             </tr>
           ))}
         </tbody>

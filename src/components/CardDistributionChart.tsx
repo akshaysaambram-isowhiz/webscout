@@ -16,6 +16,7 @@ type CardDistributionChartData = {
   category: string;
   BT: number;
   GSC: number;
+  GS: number;
 };
 
 export default function CardDistributionChart() {
@@ -26,6 +27,7 @@ export default function CardDistributionChart() {
       category: item.category,
       BT: item.BT,
       GSC: item.GSC,
+      GS: item.GS,
     }));
     setData(formattedData);
   }
@@ -76,6 +78,7 @@ export default function CardDistributionChart() {
             <Legend />
             <Bar dataKey="BT" name="BT" fill="#fff200bb" />
             <Bar dataKey="GSC" name="GSC" fill="#ff000bbb" />
+            <Bar dataKey="GS" name="GS" fill="#F2C464bb" />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -45,7 +45,7 @@ export default function Collection({ sport }: CollectionProps) {
   }, []);
 
   return (
-    <div id="collection" className="mx-auto px-4 md:px-8 pt-32 lg:pt-20 mt-6">
+    <div id="collection" className="mx-auto px-4 md:px-8 mt-6">
       <div
         className="w-full h-48 sm:h-64 md:h-96 px-8 sm:px-16 md:px-32 text-center flex flex-col items-center justify-center bg-cover bg-center rounded-xl bg-black/55 bg-blend-overlay mb-8"
         style={{ backgroundImage: `url(${image})` }}
@@ -67,10 +67,7 @@ export default function Collection({ sport }: CollectionProps) {
           ]}
         />
 
-        <div
-          className="p-4 md:p-6 overflow-y-scroll scroll-hidden"
-          style={{ flex: 3 }}
-        >
+        <div className="p-4 md:p-6" style={{ flex: 3 }}>
           {filteredData && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredData.map((card) => (

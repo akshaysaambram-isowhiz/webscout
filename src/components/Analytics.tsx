@@ -6,10 +6,10 @@ import DataTable from "./DataTable";
 import CardDistributionChart from "./CardDistributionChart";
 
 export type TableData = {
-  image: string;
   title: string;
   price: number;
   category: string;
+  website: string;
 };
 
 export default function Analytics() {

@@ -13,13 +13,22 @@ export default function Pagination({ totalPages }: PaginationProps) {
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
 
+    scrollToTop();
+
     const updatedSearchParams = new URLSearchParams(searchParams.toString());
     updatedSearchParams.set("page", page.toString());
     setSearchParams(updatedSearchParams);
   };
 
+  const scrollToTop = () => {
+    const element = document.getElementById("collection");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center space-x-2 my-6">
+    <div className="flex items-center justify-center space-x-2 my-6 overflow-x-scroll scroll-hidden">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}

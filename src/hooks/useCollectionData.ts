@@ -12,13 +12,11 @@ export default function useCollectionData(
 
   const currentPage = Number(searchParams.get("page")) || 1;
   const searchTerm = searchParams.get("search") || "";
+  const priceRange =
+    searchParams.get("priceRange")?.split(",").map(Number) || null;
+  const sortBy = searchParams.get("sortBy") || null;
 
-  const getCurrentFilters = () => {
-    const priceRange =
-      searchParams.get("priceRange")?.split(",").map(Number) || null;
-    const sortBy = searchParams.get("sortBy") || null;
-    return { priceRange, sortBy };
-  };
+  const getCurrentFilters = () => ({ priceRange, sortBy });
 
   const applyFilters = (
     currentData: CollectionCardProps[],
@@ -49,10 +47,30 @@ export default function useCollectionData(
     return result;
   };
 
+  const buildFetchUrl = () => {
+    const baseUrl = `http://localhost:3001/api/cards`;
+    const params = new URLSearchParams({
+      category: sport,
+      page: currentPage.toString(),
+    });
+
+    if (searchTerm) {
+      params.append("search", searchTerm);
+    }
+    if (priceRange) {
+      params.append("priceRange", priceRange.join(","));
+    }
+    if (sortBy) {
+      params.append("sortBy", sortBy);
+    }
+
+    return `${baseUrl}?${params.toString()}`;
+  };
+
   useEffect(() => {
-    fetchData(
-      `http://localhost:3001/api/cards?category=${sport}&page=${currentPage}&search=${searchTerm}`
-    ).then((data: any) => {
+    const fetchUrl = buildFetchUrl();
+
+    fetchData(fetchUrl).then((data: any) => {
       setData(data.data as CollectionCardProps[]);
       setTotalPages(data.metadata?.totalPages || 1);
       const currentFilters = getCurrentFilters();
@@ -60,14 +78,11 @@ export default function useCollectionData(
         applyFilters(data.data as CollectionCardProps[], currentFilters)
       );
     });
-  }, [sport, currentPage, searchTerm]);
+  }, [sport, currentPage, searchTerm, priceRange, sortBy]);
 
-  useEffect(() => {
-    const currentFilters = getCurrentFilters();
-    setFilteredData(applyFilters(data, currentFilters));
-  }, [searchParams, data]);
-
-  console.log(totalPages);
-
-  return { data, filteredData, totalPages };
+  return {
+    data,
+    filteredData,
+    totalPages,
+  };
 }

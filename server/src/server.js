@@ -99,11 +99,11 @@ app.get("/api/analytics/cards/distributions", async (req, res) => {
       `SELECT 
         category,
         SUM(CASE WHEN website = 'Bleecker Trading' THEN 1 ELSE 0 END) AS "BT",
-        SUM(CASE WHEN website = 'Gaints Sports Cards' THEN 1 ELSE 0 END) AS "GSC"
+        SUM(CASE WHEN website = 'Gaints Sports Cards' THEN 1 ELSE 0 END) AS "GSC",
+        SUM(CASE WHEN website = 'Game Stop' THEN 1 ELSE 0 END) AS "GS"
       FROM cards
       GROUP BY category
-      ORDER BY category
-      `
+      ORDER BY category`
     );
     res.json(result.rows);
   } catch (error) {
@@ -115,7 +115,24 @@ app.get("/api/analytics/cards/distributions", async (req, res) => {
 app.get("/api/analytics/table", async (req, res) => {
   try {
     const result = await client.query(
-      "WITH RankedCards AS ( SELECT image_url AS image, name AS title, price, category AS name, ROW_NUMBER() OVER (PARTITION BY category ORDER BY price) AS row_num FROM cards ) SELECT image, title, price, name AS category FROM RankedCards WHERE row_num BETWEEN 3 AND 5 ORDER BY category, price"
+      `
+      WITH RankedCards AS (
+        SELECT 
+          name AS title, 
+          price, 
+          category AS name, 
+          website,
+          ROW_NUMBER() OVER (PARTITION BY category ORDER BY price) AS row_num
+        FROM cards
+      )
+      SELECT 
+        title, 
+        price, 
+        name AS category, 
+        website
+      FROM RankedCards
+      WHERE row_num BETWEEN 3 AND 5
+      ORDER BY category, price`
     );
     res.json(result.rows);
   } catch (error) {
