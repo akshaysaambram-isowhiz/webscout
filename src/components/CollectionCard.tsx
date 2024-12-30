@@ -2,12 +2,14 @@ export type CollectionCardProps = {
   title: string;
   image: string;
   price: string;
+  website: string;
 };
 
 export default function CollectionCard({
   title,
   image,
   price,
+  website,
 }: CollectionCardProps) {
   return (
     <div
@@ -30,6 +32,7 @@ export default function CollectionCard({
       <div className="p-4 space-y-2">
         <h3 className="text-lg font-bold text-gray-800">{title}</h3>
         <p className="text-2xl font-bold text-yellow-600">$ {price}</p>
+        <h2 className="text-base font-bold text-gray-500 italic">{website}</h2>
       </div>
     </div>
   );

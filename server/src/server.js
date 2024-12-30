@@ -21,7 +21,7 @@ app.use(express.json());
 client.connect();
 
 app.get("/api/cards", async (req, res) => {
-  const { category, search = null, page = 1, limit = 10 } = req.query;
+  const { category, search = null, page = 1, limit = 12 } = req.query;
   const offset = (page - 1) * limit;
 
   if (!category) {
@@ -42,7 +42,8 @@ app.get("/api/cards", async (req, res) => {
       SELECT 
         name AS title, 
         price, 
-        image_url AS image 
+        image_url AS image,
+        website
       FROM cards 
       WHERE category ILIKE $1 AND name IS NOT null ${searchCondition}
       LIMIT $${search ? 3 : 2} OFFSET $${search ? 4 : 3}
@@ -70,7 +71,7 @@ app.get("/api/cards", async (req, res) => {
       data: result.rows,
       metadata: {
         page: parseInt(page, 10),
-        limit: parseInt(limit, 10),
+        limit: parseInt(limit, 12),
         totalPages,
         totalItems: total,
       },
@@ -100,7 +101,8 @@ app.get("/api/analytics/cards/distributions", async (req, res) => {
         category,
         SUM(CASE WHEN website = 'Bleecker Trading' THEN 1 ELSE 0 END) AS "BT",
         SUM(CASE WHEN website = 'Gaints Sports Cards' THEN 1 ELSE 0 END) AS "GSC",
-        SUM(CASE WHEN website = 'Game Stop' THEN 1 ELSE 0 END) AS "GS"
+        SUM(CASE WHEN website = 'Game Stop' THEN 1 ELSE 0 END) AS "GS",
+        SUM(CASE WHEN website = 'Da Card World' THEN 1 ELSE 0 END) AS "DCW"
       FROM cards
       GROUP BY category
       ORDER BY category`
@@ -122,7 +124,8 @@ app.get("/api/analytics/table", async (req, res) => {
           price, 
           category AS name, 
           website,
-          ROW_NUMBER() OVER (PARTITION BY category ORDER BY price) AS row_num
+          ROW_NUMBER() OVER (PARTITION BY category ORDER BY price) AS row_num,
+          sys_created_date
         FROM cards
       )
       SELECT 
@@ -132,7 +135,7 @@ app.get("/api/analytics/table", async (req, res) => {
         website
       FROM RankedCards
       WHERE row_num BETWEEN 3 AND 5
-      ORDER BY category, price`
+      ORDER BY sys_created_date desc, price`
     );
     res.json(result.rows);
   } catch (error) {

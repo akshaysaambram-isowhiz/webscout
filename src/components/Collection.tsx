@@ -43,6 +43,7 @@ export default function Collection({ sport }: CollectionProps) {
       "-=0.5"
     );
   }, []);
+  
 
   return (
     <div id="collection" className="mx-auto px-4 md:px-8 mt-6">

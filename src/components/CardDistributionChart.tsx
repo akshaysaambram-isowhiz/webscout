@@ -17,6 +17,7 @@ type CardDistributionChartData = {
   BT: number;
   GSC: number;
   GS: number;
+  DCW: number;
 };
 
 export default function CardDistributionChart() {
@@ -28,6 +29,7 @@ export default function CardDistributionChart() {
       BT: item.BT,
       GSC: item.GSC,
       GS: item.GS,
+      DCW: item.DCW,
     }));
     setData(formattedData);
   }
@@ -69,16 +71,17 @@ export default function CardDistributionChart() {
         </button>
       </div>
 
-      <div className="relative h-64 min-h-[250px]">
+      <div className="relative w-full h-64 min-h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
             <XAxis dataKey="category" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="BT" name="BT" fill="#fff200bb" />
-            <Bar dataKey="GSC" name="GSC" fill="#ff000bbb" />
-            <Bar dataKey="GS" name="GS" fill="#F2C464bb" />
+            <Bar dataKey="BT" name="Bleecker Trading" fill="#fff200bb" />
+            <Bar dataKey="GSC" name="Gaints Sports Cards" fill="#ff000bbb" />
+            <Bar dataKey="GS" name="Game Stop" fill="#F2C464bb" />
+            <Bar dataKey="DCW" name="Da Card World" fill="#f29020bb" />
           </BarChart>
         </ResponsiveContainer>
       </div>

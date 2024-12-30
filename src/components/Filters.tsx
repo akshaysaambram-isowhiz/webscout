@@ -39,6 +39,34 @@ export function Filters({ priceRange: [min, max] }: FilterProps) {
           </div>
         </div>
 
+        {/* <div className="mt-6">
+          <label className="text-sm font-medium text-gray-700 block mb-2">
+            Website
+          </label>
+          <div className="space-y-2">
+            <div>
+              <input type="checkbox" className="checkbox accent-yellow-500" />
+              <span className="ml-2 text-sm text-gray-700">Da Card World</span>
+            </div>
+            <div>
+              <input type="checkbox" className="checkbox" />
+              <span className="ml-2 text-sm text-gray-700">
+                Gaints Sports Cards
+              </span>
+            </div>
+            <div>
+              <input type="checkbox" className="checkbox" />
+              <span className="ml-2 text-sm text-gray-700">Game Stop</span>
+            </div>
+            <div>
+              <input type="checkbox" className="checkbox" />
+              <span className="ml-2 text-sm text-gray-700">
+                Bleecker Trading
+              </span>
+            </div>
+          </div>
+        </div> */}
+
         <div className="mt-6">
           <label className="text-sm font-medium text-gray-700 block mb-2">
             Sort By
